@@ -15,7 +15,7 @@ namespace WebApplication1.Models
 
         public DAOUsers()
         {
-            this.con.ConnectionString = @"Data Source=EDMUNDO-AZUS\SQLEXPRESS; Initial Catalog=temporal; Integrated Security=true";
+            this.con.ConnectionString = @"Data Source=DESKTOP-26CCQIV; Initial Catalog=usuarios; Integrated Security=true";
         }
 
         public List<Usuarios> getTabla()

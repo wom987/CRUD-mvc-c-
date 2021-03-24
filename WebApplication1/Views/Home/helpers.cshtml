@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "helpers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var listaItems = new List<SelectListItem>();
+    listaItems.Add(new SelectListItem() { Value = "Valor 1", Text = "1" });
+    listaItems.Add(new SelectListItem() { Value = "Valor 2", Text = "2" });
+    listaItems.Add(new SelectListItem() { Value = "Valor 3", Text = "3" });
+}
+
+
+<h2>helpers</h2>
+
+<hr />
+<h4>
+    Formulario de Ingreso
+</h4>
+<hr />
+
+@using (Html.BeginForm("recibeForm", "home", FormMethod.Post))
+{
+    @Html.Label("Nombre de usuario", htmlAttributes: new { @class = "label label-default" })
+    @Html.TextBox("txtNombre", null, htmlAttributes: new { @class = "form-control" })
+    <br />
+    @Html.Label("Password", htmlAttributes: new { @class = "label label-default" })
+    @Html.Password("txtpassword", null, htmlAttributes: new { @class = "form-control" })
+    <br />
+    @Html.Label("Nivel", htmlAttributes: new { @class = "label label-default" })
+    @Html.DropDownList("combo", listaItems, htmlAttributes: new { @class = "form-control" })
+    <br />
+
+    <input type="submit" value="ingresar" name="boton" class="btn btn-success" />
+}
+
+
+
+
+
+
+
+

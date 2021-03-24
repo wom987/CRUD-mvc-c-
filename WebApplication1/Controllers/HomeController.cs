@@ -5,14 +5,14 @@ using System.Web;
 using System.Web.Mvc;
 
 //incluyendo la carpeta modelos
-using WebApplication1.Mo;
+using WebApplication1.Models;
 
 
-namespace PRACTICA_S4_DS39A.Controllers
+namespace WebApplication1.Controllers
 {
     public class HomeController : Controller
     {
-        DAOUsuario dao = new DAOUsuario();
+        DAOUsers dao = new DAOUsers();
 
 
         public ActionResult Index()
