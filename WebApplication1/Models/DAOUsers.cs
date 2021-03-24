@@ -53,8 +53,38 @@ namespace WebApplication1.Models
                 return false;
             }
         }
-
-
+        public bool editar(int id, String username, String password, int nivel)
+        {
+            string sql = "update usuarios set username = '"+username+"', pass= '"+password+"', nivel="+nivel+" where userid = "+id+";";
+            cmd.Connection = this.con;
+            cmd.CommandText = sql;
+            cmd.Connection.Open();
+            int r = cmd.ExecuteNonQuery();
+            if (r == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool eliminar(int id)
+        {
+            string sql = "delete from usuarios where userid = "+id+";";
+            cmd.Connection = this.con;
+            cmd.CommandText = sql;
+            cmd.Connection.Open();
+            int r = cmd.ExecuteNonQuery();
+            if (r == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
     }
 }

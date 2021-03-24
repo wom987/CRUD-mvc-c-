@@ -1,0 +1,115 @@
+﻿
+@{
+
+    ViewBag.Title = "ListarUsuarios";
+    @model IEnumerable<WebApplication1.Models.Usuarios>
+    var data = ViewBag.userList = "userList";
+}
+
+<h2>ListarUsuarios</h2>
+@if (data != null)
+{
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th scope="col">#ID</th>
+                <th scope="col">Usuario</th>
+                <th scope="col">Contraseña</th>
+                <th scope="col">Nivel</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.userid)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.username)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.pass)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nivel)
+                    </td>
+                    <td>
+                        <button class="btn btn-warning" onclick="swalFire(@item.userid, '@item.username', '@item.pass', @item.nivel);">Editar</button> <button class="btn btn-danger" onclick="swalFire()">Eliminar</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<script>
+    function swalFire(id, username, pass, nivel) {
+        Swal.fire({
+            title: '<h2>Editar usuario</h2>',
+            html: `<div class="form-group">
+                    <h4>Usuario<h4>
+                    <input type="hidden" id="id" class="form-control" value ="`+ id + `">
+                    <input type="text" id="username" class="form-control" value ="`+ username + `">
+                    </div>
+                    <div class="form-group">
+                    <h4>Contraseña<h4>
+                    <input type="password" id="password" class="form-control" value="`+ pass + `">
+                    </div>
+                    <div class="form-group">
+                    <h4>Selecionar nivel:<h4>
+                    <div class="form-group">
+                    <select id="nivel" class="form-control">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                    </select>
+                    </div>`,
+            showCancelButton: true,
+            confirmButtonText: `Editar`,
+            cancelButtonText: `Cancelar`,
+            preConfirm: () => {
+                const id = Swal.getPopup().querySelector('#id').value
+                const username = Swal.getPopup().querySelector('#username').value
+                const password = Swal.getPopup().querySelector('#password').value
+                const nivel = Swal.getPopup().querySelector('#nivel').value
+                if (!username || !password) {
+                    Swal.showValidationMessage(`Ingrese todo los campos`)
+                } else {
+                    $.ajax({
+                type: "POST",
+                url: '@Url.Action("Editar","Home")',
+                data: { 'id': id, 'username': username, password: password, nivel: nivel },
+                cache: false,
+                success: function (response) {
+                    Swal.fire({
+                        title: "Guardado!",
+                        text: "Usuario actualizado.",
+                        icon: "success",
+                        timer: 2500,
+                        allowOutsideClick: false,
+                        showConfirmButton: false
+                    }).then(function () {
+                       
+                            window.location = '@Url.Action("ListarUsuarios","Home")';
+                        
+                    })
+                },
+                failure: function (response) {
+                    Swal.fire(
+                        "Internal Error",
+                        "Oops, your note was not saved.", // had a missing comma
+                        "error"
+                    )
+                }
+            });
+                }
+               
+            }
+        })
+    }
+</script>
+

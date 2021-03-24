@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+
 //esto es para hacer posible las validaciones
 using System.ComponentModel.DataAnnotations;
 
@@ -9,7 +10,7 @@ namespace WebApplication1.Models
 {
     public class Usuarios
     {
-        [Required]
+         [Required]
         public int userid { get; set; }
         [Required]
         public string username { get; set; }

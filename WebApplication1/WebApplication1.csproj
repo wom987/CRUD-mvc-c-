@@ -166,6 +166,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Usuarios.cshtml" />
     <Content Include="Views\Home\helpers.cshtml" />
+    <Content Include="Views\Home\ListarUsuarios.cshtml" />
+    <Content Include="Views\Home\UserList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
