@@ -37,7 +37,7 @@
                         @Html.DisplayFor(modelItem => item.nivel)
                     </td>
                     <td>
-                        <button class="btn btn-warning" onclick="swalFire(@item.userid, '@item.username', '@item.pass', @item.nivel);">Editar</button> <button class="btn btn-danger" onclick="swalFire()">Eliminar</button>
+                        <button class="btn btn-warning" onclick="actualizar(@item.userid, '@item.username', '@item.pass', @item.nivel);">Editar</button> <button class="btn btn-danger" onclick="eliminar(@item.userid)">Eliminar</button>
                     </td>
                 </tr>
             }
@@ -46,7 +46,7 @@
 }
 
 <script>
-    function swalFire(id, username, pass, nivel) {
+    function actualizar(id, username, pass, nivel) {
         Swal.fire({
             title: '<h2>Editar usuario</h2>',
             html: `<div class="form-group">
@@ -93,21 +93,63 @@
                         allowOutsideClick: false,
                         showConfirmButton: false
                     }).then(function () {
-                       
+
                             window.location = '@Url.Action("ListarUsuarios","Home")';
-                        
+
                     })
                 },
                 failure: function (response) {
                     Swal.fire(
-                        "Internal Error",
-                        "Oops, your note was not saved.", // had a missing comma
+                        "Error Interno",
+                        "Oops, no se pudo guardar.",
                         "error"
                     )
                 }
             });
                 }
-               
+
+            }
+        })
+    }
+    function eliminar(id) {
+        Swal.fire({
+            title: 'Desea eliminar el registro?',
+            icon: 'warning',
+            showDenyButton: true,
+            confirmButtonText: `Continuar`,
+            denyButtonText: `Cancelar`,
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                 $.ajax({
+                type: "POST",
+                url: '@Url.Action("Eliminar","Home")',
+                data: { 'id': id},
+                cache: false,
+                success: function (response) {
+                    Swal.fire({
+                        title: "Eliminado!",
+                        text: "Usuario eliminado.",
+                        icon: "success",
+                        timer: 2500,
+                        allowOutsideClick: false,
+                        showConfirmButton: false
+                    }).then(function () {
+
+                            window.location = '@Url.Action("ListarUsuarios","Home")';
+
+                    })
+                },
+                failure: function (response) {
+                    Swal.fire(
+                        "Error Interno",
+                        "Oops, no se pudo guardar.",
+                        "error"
+                    )
+                }
+            });
+            } else if (result.isDenied) {
+                Swal.fire('Operacion cancelada', '', 'info')
             }
         })
     }

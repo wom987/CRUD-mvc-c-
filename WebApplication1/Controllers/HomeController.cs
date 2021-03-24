@@ -71,6 +71,10 @@ namespace com.myApp
                 }
                 return View(u);
             }
+            public ActionResult Editar()
+            {
+                return RedirectToAction("Index");
+            }
             [HttpPost]
             public JsonResult Editar(int id, String username, String password, int nivel)
             {
@@ -88,7 +92,18 @@ namespace com.myApp
             {
                 return View(dao.getTabla());
             }
+            public ActionResult Eliminar()
+            {
+                return RedirectToAction("Index");
+            }
+            [HttpPost]
+            public JsonResult Eliminar(int id)
+            {
+                bool result = dao.eliminar(id);
 
+                return Json(result);
+
+            }
 
         }
     }
